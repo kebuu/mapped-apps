@@ -43,8 +43,6 @@ map.on('locationerror', function(errorEvent) {
 });
 
 map.on('click', function(evt) {
-    console.log(arguments);
-
     var urlTemplate = 'https://download.data.grandlyon.com/wms/grandlyon?' +
                               'SERVICE=WMS'+
                               '&REQUEST=GetFeatureInfo'+
@@ -67,11 +65,16 @@ map.on('click', function(evt) {
         height : map.getSize().y,
     };
 
-    console.log(urlParams,  _.template(urlTemplate, urlParams));
     $.ajax({
         url : _.template(urlTemplate, urlParams),
         success : function(data) {
-            console.log();
+            if(data) {
+            test = data;
+                var popup = L.popup()
+                    .setLatLng(evt.latlng)
+                    .setContent(data.replace(/\n/g, '<br/>'))
+                    .openOn(map);
+            }
         }
     });
 });

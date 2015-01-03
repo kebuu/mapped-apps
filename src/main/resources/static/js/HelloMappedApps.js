@@ -51,6 +51,7 @@ L.control.layers(baseMaps, overlayMaps).addTo(map);
 L.control.scale({position : 'bottomright'}).addTo(map);
 L.control.mousePosition().addTo(map);
 new L.Control.MiniMap(osmMini).addTo(map);
+kebUtil.control.zoomInfo(map).addTo(map);
 
 function zoomerSurLyon() {
     map.setView(zenikaLyon, 14);

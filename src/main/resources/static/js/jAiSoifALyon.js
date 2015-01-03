@@ -12,7 +12,12 @@ var fontaine = L.tileLayer.wms("https://download.data.grandlyon.com/wms/grandlyo
 
 map.on('locationfound', function(locationEvent) {
 
-    L.marker(locationEvent.latlng).bindPopup('Your position').addTo(map);
+    var yourPositionPopup = new L.Popup({closeOnClick : false, autoPan : false, offset : L.point(0, -25)});
+    yourPositionPopup.setLatLng(locationEvent.latlng);
+    yourPositionPopup.setContent('Your position');
+    map.addLayer(yourPositionPopup);
+
+    L.marker(locationEvent.latlng).addTo(map).bindPopup(yourPositionPopup);
 
     $.ajax({
         url : 'https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&REQUEST=GetFeature&version=2.0.0&TYPENAME=epo_eau_potable.epobornefont&outputFormat=application/json; subtype=geojson',
@@ -20,14 +25,14 @@ map.on('locationfound', function(locationEvent) {
             var closestFeature = _.chain(data.features)
                 .min(function(feature) {
                      var coordinates = feature.geometry.coordinates;
-                     return kebUtil.distance(locationEvent.latlng, kebUtil.toLatLng(coordinates));
+                     return locationEvent.latlng.distanceTo(kebUtil.toLatLng(coordinates));
                  })
                 .value();
 
             var closestFeatureLatLng = kebUtil.toLatLng(closestFeature.geometry.coordinates);
             map.setView(closestFeatureLatLng);
             L.marker(closestFeatureLatLng).addTo(map)
-                .bindPopup('Closest at ' + Math.round(1000 * kebUtil.distance(locationEvent.latlng, closestFeatureLatLng)) + 'm<br>' +
+                .bindPopup('Closest at ' + Math.round(locationEvent.latlng.distanceTo(closestFeatureLatLng)) + 'm<br>' +
                 '<a target="_blank" href="https://www.google.fr/maps/dir/' + locationEvent.latlng.lat + ',' + locationEvent.latlng.lng + '/' + closestFeatureLatLng.lat + ',' + closestFeatureLatLng.lng +'/">Lets go ?</a>')
                 .openPopup();
         }

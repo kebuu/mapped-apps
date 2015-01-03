@@ -37,21 +37,3 @@ var kebUtil = {
         }
     }
 };
-
-var info = L.control();
-
-		info.onAdd = function (map) {
-		    this._div = L.DomUtil.create('div', 'info'); 
-		    this.update();
-		    return this._div;
-		};
-		
-		info.update = function (props) {
-		    this._div.innerHTML = '<h4>Distance</h4>' +  (props ? (props.distance>10000)?(props.distance/1000).toFixed(0)+' km':(props.distance).toFixed(0)+' m' : 'invalid');
-		};
-		info.addTo(map);		
-		
-		Geodesic.update = function () {
-		  Geodesic.setLatLngs([[A.getLatLng(), B.getLatLng()]]);
-		  info.update(Geodesic._vincenty_inverse(A.getLatLng(), B.getLatLng()));
-		};

@@ -12,12 +12,7 @@ var fontaine = L.tileLayer.wms("https://download.data.grandlyon.com/wms/grandlyo
 
 map.on('locationfound', function(locationEvent) {
 
-    var yourPositionPopup = new L.Popup({closeOnClick : false, autoPan : false});
-    yourPositionPopup.setLatLng(locationEvent.latlng);
-    yourPositionPopup.setContent('Your position');
-    map.addLayer(yourPositionPopup);
-
-    L.marker(locationEvent.latlng).bindPopup(yourPositionPopup).addTo(map);
+    L.marker(locationEvent.latlng).bindPopup('Your position').addTo(map);
 
     $.ajax({
         url : 'https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&REQUEST=GetFeature&version=2.0.0&TYPENAME=epo_eau_potable.epobornefont&outputFormat=application/json; subtype=geojson',
@@ -45,21 +40,24 @@ map.on('locationerror', function(errorEvent) {
 map.on('click', function(evt) {
     var urlTemplate = 'https://download.data.grandlyon.com/wms/grandlyon?' +
                               'SERVICE=WMS'+
+                              '&VERSION=1.1.1'+
                               '&REQUEST=GetFeatureInfo'+
-                              '&version=1.1.1'+
-                              '&QUERY_LAYERS=epo_eau_potable.epobornefont'+
                               '&LAYERS=epo_eau_potable.epobornefont'+
-                              '&X=${x}'+
-                              '&Y=${y}'+
+                              '&QUERY_LAYERS=epo_eau_potable.epobornefont'+
+                              '&STYLES='+
                               '&BBOX=${bbox}'+
-                              '&WIDTH=${width}'+
+                              '&FEATURE_COUNT=10'+
                               '&HEIGHT=${height}'+
-                              '&SRS=EPSG:4326'+
+                              '&WIDTH=${width}'+
                               '&FORMAT=image/png'+
-                              '&INFO_FORMAT=text/plain';
+                              '&INFO_FORMAT=text/plain' +
+                              '&SRS=EPSG:4326'+
+                              '&X=${x}'+
+                              '&Y=${y}';
+
     var urlParams = {
-        x : evt.layerPoint.x,
-        y : evt.layerPoint.y,
+        x : map.layerPointToContainerPoint(evt.layerPoint).x,
+        y : map.layerPointToContainerPoint(evt.layerPoint).y,
         bbox : map.getBounds().toBBoxString(),
         width : map.getSize().x,
         height : map.getSize().y,
@@ -69,7 +67,6 @@ map.on('click', function(evt) {
         url : _.template(urlTemplate, urlParams),
         success : function(data) {
             if(data) {
-            test = data;
                 var popup = L.popup()
                     .setLatLng(evt.latlng)
                     .setContent(data.replace(/\n/g, '<br/>'))

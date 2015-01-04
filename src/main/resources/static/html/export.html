@@ -3,13 +3,17 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Openlayers3 TPs</title>
-    <script src="/webjars/openlayers/3.0.0-1/ol.js"></script>
+    <link rel="stylesheet" href="/webjars/leaflet/0.7.3/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
 
-    <link rel="stylesheet" href="../css/main.css" type="text/css">
+    <script src="/webjars/leaflet/0.7.3/leaflet.js"></script>
+    <script src='/js/leaflet/leaflet-image.js'></script>
+    <script src="/js/util.js"></script>
 </head>
 <body>
     <div id="map" class="map"></div>
-    <a id="export-png" download="map.png">Export PNG</a>
-    <script src="../js/export.js"></script>
+    <button onclick="exportFn()">Export</button>
+    <a id="export-png" download="map.png"></a>
+    <script src="/js/export.js"></script>
 </body>
 </html>

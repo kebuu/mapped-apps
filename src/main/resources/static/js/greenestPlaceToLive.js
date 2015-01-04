@@ -17,3 +17,12 @@ $.ajax({
         console.log(arguments);
     }
 });
+
+var purpleIcon = L.icon({
+    iconUrl: '/images/marker-icon-purple.png'
+});
+
+var changingMarker = L.marker([45.762186, 4.862247]).addTo(map);
+changingMarker.on('click', function() {
+    changingMarker.setIcon(purpleIcon);
+});

@@ -103,7 +103,7 @@ L.control.mousePosition().addTo(map);
 new L.Control.MiniMap(osmMini).addTo(map);
 kebUtil.control.zoomInfo(map).addTo(map);
 
-function zoomerSurLyon() {
+function zoomToLyon() {
     console.warn('Not implemented yet');
     map.setView(zenikaLyon, 14);
 }

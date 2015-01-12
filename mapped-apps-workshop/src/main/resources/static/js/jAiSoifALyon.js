@@ -81,4 +81,4 @@ map.on('click', function(evt) {
     });
 });
 
-map.locate();
+map.locate({setView : true});

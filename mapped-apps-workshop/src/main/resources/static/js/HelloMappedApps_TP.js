@@ -54,7 +54,7 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 -> doc http://leafletjs.com/reference.html#control-layers
 */
 
-/* STEP M&M : - Quelle est la valeur de l'échelle en km au niveau de zoom 9 ?
+/* STEP M&M's : - Quelle est la valeur de l'échelle en km au niveau de zoom 9 ?
 */
 
 /* STEP Bonus : - Regarder la doc des différents controls pour adapter changer leur comportement

@@ -51,6 +51,27 @@ var kebUtil = {
         });
         
         return new marker(coordinates, options);
+    },
+
+    findClosestFountain : function(fromLatLng) {
+        $.ajax({
+            url : 'https://download.data.grandlyon.com/wfs/grandlyon?SERVICE=WFS&REQUEST=GetFeature&version=2.0.0&TYPENAME=epo_eau_potable.epobornefont&outputFormat=application/json; subtype=geojson',
+            success : function(data) {
+                var closestFeature = _.chain(data.features)
+                    .min(function(feature) {
+                         var coordinates = feature.geometry.coordinates;
+                         return fromLatLng.distanceTo(kebUtil.toLatLng(coordinates));
+                     })
+                    .value();
+
+                var closestFeatureLatLng = kebUtil.toLatLng(closestFeature.geometry.coordinates);
+
+                L.marker(closestFeatureLatLng).addTo(map)
+                    .bindPopup('Fontaine la plus proche à ' + Math.round(fromLatLng.distanceTo(closestFeatureLatLng)) + 'm<br>' +
+                    '<div style="text-align:center"><a target="_blank" href="https://www.google.fr/maps/dir/' + fromLatLng.lat + ',' + fromLatLng.lng + '/' + closestFeatureLatLng.lat + ',' + closestFeatureLatLng.lng +'/">Y aller</a></div>')
+                    .openPopup();
+            }
+        });
     }
 };
 

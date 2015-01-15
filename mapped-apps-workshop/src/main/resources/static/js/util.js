@@ -72,6 +72,38 @@ var kebUtil = {
                     .openPopup();
             }
         });
+    },
+
+    getFeatureInfo : function(map, urlParams) {
+        var getFeatureInfoUrlTemplate = 'https://download.data.grandlyon.com/wms/grandlyon?' +
+                                  'SERVICE=WMS'+
+                                  '&VERSION=1.1.1'+
+                                  '&REQUEST=GetFeatureInfo'+
+                                  '&LAYERS=epo_eau_potable.epobornefont'+
+                                  '&QUERY_LAYERS=epo_eau_potable.epobornefont'+
+                                  '&STYLES='+
+                                  '&BBOX=${bbox}'+
+                                  '&FEATURE_COUNT=10'+
+                                  '&HEIGHT=${height}'+
+                                  '&WIDTH=${width}'+
+                                  '&FORMAT=image/png'+
+                                  '&INFO_FORMAT=text/plain' +
+                                  '&SRS=EPSG:4326'+
+                                  '&X=${x}'+
+                                  '&Y=${y}';
+
+        $.ajax({
+            url : _.template(getFeatureInfoUrlTemplate, urlParams),
+            success : function(data) {
+                if(data) {
+                    var clickedPoint = L.point(urlParams.x, urlParams.y);
+                    var popup = L.popup()
+                        .setLatLng(map.layerPointToLatLng(map.containerPointToLayerPoint(clickedPoint)))
+                        .setContent(data.replace(/\n/g, '<br/>'))
+                        .openOn(map);
+                }
+            }
+        });
     }
 };
 

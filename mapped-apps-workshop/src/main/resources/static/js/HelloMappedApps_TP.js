@@ -10,11 +10,6 @@ var zenikaParis = [48.878933, 2.328639];
             - doc map: http://leafletjs.com/reference.html#map-class
             - doc tile layer: http://leafletjs.com/reference.html#tilelayer
 */
-var map = L.map('map').setView(franceCenter, 5);
-
-var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: 'Zenika - Technozaure | OSM'
-}).addTo(map);
 
 /* STEP 2 : - Ajouter une marker sur zenika Lyon avec une popup contenant le texte 'Zenika Lyon'
             - Ajouter une marker sur zenika Paris avec une popup contenant le texte 'Zenika Paris' et une icone personnalisée:
@@ -60,50 +55,6 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 /* STEP Bonus : - Regarder la doc des différents controls pour adapter changer leur comportement
 */
 
-var osmMini = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-
-var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-    attribution: 'Zenika - Technozaure | Mapbox',
-    id: 'ctardella.kko459nh'
-});
-
-var velov = L.tileLayer.wms("https://download.data.grandlyon.com/wms/smartdata", {
-    layers: 'jcd_jcdecaux.jcdvelov',
-    format: 'image/png',
-    transparent: true
-}).addTo(map);
-//
-var garbage = L.tileLayer.wms("https://download.data.grandlyon.com/wms/grandlyon", {
-    layers: 'gin_nettoiement.gincorbeille',
-    format: 'image/png',
-    transparent: true
-}).addTo(map);
-//
-var zenIcon = L.icon({
-    iconUrl: '/images/logo-zenika.jpg',
-    iconSize: [20, 26]
-});
-
-L.marker(zenikaLyon).addTo(map).bindPopup('Zenika Lyon');
-L.marker(zenikaParis, {icon: zenIcon}).addTo(map).bindPopup('Zenika Paris');
-
-var baseMaps = {
-    "MapBox": mapbox,
-    "OpenStreetMap": osm
-};
-
-var overlayMaps = {
-    "Velov": velov,
-    "Corbeille": garbage
-};
-
-L.control.layers(baseMaps, overlayMaps).addTo(map);
-L.control.scale({position : 'bottomright'}).addTo(map);
-L.control.mousePosition().addTo(map);
-new L.Control.MiniMap(osmMini).addTo(map);
-kebUtil.control.zoomInfo(map).addTo(map);
-
 function zoomToLyon() {
     console.warn('Not implemented yet');
-    map.setView(zenikaLyon, 14);
 }

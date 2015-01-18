@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/webjars/bootstrap/3.1.1/css/bootstrap.min.css"/>
+    <script src="/webjars/angularjs/1.2.17/angular.min.js"></script>
+    <script src="/webjars/jquery/1.9.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="/webjars/angular-ui-bootstrap/0.11.0/ui-bootstrap.min.js"></script>
+    <script src="/webjars/lodash/2.4.1-6/lodash.min.js"></script>
+
+    <script src="/webjars/sockjs-client/0.3.4-1/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.1-1/stomp.min.js"></script>
+    <script src="eventlog.js"></script>
+    <title>Applications Cartographiques - EventLog</title>
+</head>
+<body ng-app="app">
+
+<div ng-controller="mainCtrl">
+
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <h1 class="navbar-brand">Applications Cartographiques - EventLog</h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="eventContainer" class="container">
+        <div class="event" ng-repeat="event in events.reverse()">
+            {{event | json}}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

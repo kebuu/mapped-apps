@@ -2,15 +2,13 @@ package com.kebuu.workshop.controller;
 
 import com.kebuu.workshop.config.WorkshopResponses;
 import com.kebuu.workshop.dto.StepEvent;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Arrays;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/response")
@@ -19,27 +17,18 @@ public class StepResponseController {
     @Autowired private WorkshopResponses workshopResponses;
     @Autowired private SimpMessagingTemplate webSocketTemplate;
 
-    @RequestMapping("/")
-    public ResponseEntity<Void> d() {
-        return ResponseEntity.ok().build();
-    }
-    
-    @RequestMapping("/{tp:tp(?:1|2|3)}/{answer}/{user}")
-    public ResponseEntity<Void> answerTp1(@PathVariable("tp") String tp, @PathVariable("answer") String answer, @PathVariable("user") String user) {
+    @RequestMapping("/{tp:tp(?:[1-4])}/{answer}")
+    public ResponseEntity<Void> answerTp1(@PathVariable("tp") String tp,
+                                          @PathVariable("answer") String answer,
+                                          @RequestParam("user") String user,
+                                          @RequestParam(value = "userAvatarUrl", required = false) String userAvatarUrl) {
         boolean isAnswerCorrect = isAnswerCorrect(tp, answer);
-        sendWebSocketFeedBack(tp, user, isAnswerCorrect);
+        sendWebSocketFeedBack(tp, user, isAnswerCorrect, userAvatarUrl);
         return isAnswerCorrect ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
-    @RequestMapping(value="/tp4/{user}", method= RequestMethod.POST)
-    public ResponseEntity<Void> handleFileUpload(@PathVariable("user") String user, @RequestParam("answer") MultipartFile file) throws IOException {
-        boolean isAnswerCorrect = Arrays.equals(file.getBytes(), IOUtils.toByteArray(workshopResponses.getTp4().getInputStream()));
-        sendWebSocketFeedBack("tp4", user, isAnswerCorrect);
-        return isAnswerCorrect ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
-    }
-    
-    private void sendWebSocketFeedBack(String tp, String user, boolean isAnswerCorrect) {
-        StepEvent stepEvent = StepEvent.builder().step(tp).user(user).successful(isAnswerCorrect).build();
+    private void sendWebSocketFeedBack(String tp, String user, boolean isAnswerCorrect, String userAvatarUrl) {
+        StepEvent stepEvent = StepEvent.builder().step(tp).user(user).successful(isAnswerCorrect).userAvatarUrl(userAvatarUrl).build();
         webSocketTemplate.convertAndSend("/topic/stepEvent", stepEvent);
     }
 

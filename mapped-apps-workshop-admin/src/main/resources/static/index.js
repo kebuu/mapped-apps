@@ -1,20 +1,13 @@
 OAuth.initialize('WYdOxw8gZZzIHtgIYKMMtqv_ujc');
-OAuth.popup('google').done(function(result) {
-    console.log('google connexion ok', result);
-    // do some stuff with result
-    result.get('https://www.googleapis.com/oauth2/v2/userinfo').done(function(data) {
-        // do something with `data`, e.g. print data.name
-        console.log('me ok', data);
-    })
-
-});
 
 var module = angular.module('app', []);
 
 module.controller('mainCtrl', function($scope, $http) {
-    
+
+    $scope.loggedUserInfo = null;
+
     var buildUrl = function(tp, answer, user) {
-        return url = '/tp' + tp + '/' + answer + '/' + user;
+        return url = '/tp' + tp + '/' + answer + '?user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.picture;
     };
     
     $scope.tpConfigs = [{
@@ -39,6 +32,7 @@ module.controller('mainCtrl', function($scope, $http) {
     
         if(tp === 4) {
             console.log('TP4');
+            //http://jsfiddle.net/eliseosoto/JHQnk/
         }
         
         $http.get(buildUrl(tp, answer, user))
@@ -50,4 +44,11 @@ module.controller('mainCtrl', function($scope, $http) {
         });
     };
 
+    OAuth.popup('google', {cache: true}).done(function(result) {
+        console.log('google connexion ok', result);
+        result.get('https://www.googleapis.com/oauth2/v2/userinfo').done(function(data) {
+            console.log('loggedUserInfo ok', data);
+             $scope.loggedUserInfo = data;
+        })
+    });
 });

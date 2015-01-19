@@ -7,6 +7,7 @@ import lombok.experimental.Builder;
 @Builder
 public class StepEvent {
     private String user;
+    private String userAvatarUrl;
     private String step;
     private boolean successful;
 }

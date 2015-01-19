@@ -5,10 +5,6 @@ module.controller('mainCtrl', function($scope) {
     console.log('starting fun');
     
     $scope.events = [];
-    
-    $scope.onStepEvent = function(data) {
-        console.log(data);
-    };
 
     var stompClient = null;
     var webSocketConnect = function connect() {
@@ -18,11 +14,10 @@ module.controller('mainCtrl', function($scope) {
         
             stompClient.subscribe('/topic/stepEvent', function(message){
                 $scope.$apply(function() {
-                    $scope.onStepEvent(JSON.parse(message.body));
+                    var data = JSON.parse(message.body);
+                    $scope.events.splice(0, 0, data);
                 });
             });
-
-            //$http.get('/gameStatus');
         });
     };
 

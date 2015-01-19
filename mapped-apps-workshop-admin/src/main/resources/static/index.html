@@ -22,6 +22,10 @@
         </div>
     </div>
 
+    <div ng-repeat="tpConfig in tpConfigs | filter:{rewarded:true}">
+        {{tpConfig}}
+    </div>
+    
     <div class="container">
         <div ng-repeat="tpConfig in tpConfigs">
             <div class="row">
@@ -35,15 +39,17 @@
                         <strong>Objectifs :</strong> {{tpConfig.objectives}}
                     </p>
                 </div>
-                <!--<div class="col-md-4">-->
-                    <!--<form>-->
-                        <!--<input class="form-control" ng-show="tp{{tpConfig.id}}Ok" type="{{tpConfig.inputType}}" ng-model="tp{{tpConfig.id}}Answer"/>-->
-                        <!--<button ng-show="tp{{tpConfig.id}}Ok" class="btn btn-success" ng-click="answerStep(tpConfig.id, tp{{tpConfig.id}}Answer, user)">Tenter votre chance</button>-->
-                        <!--<p class="text-success" ng-show="tp{{tpConfig.id}}Ok">TP{{tpConfig.id}} OK</p>-->
-                    <!--</form>-->
-                <!--</div>-->
+                <div class="col-md-4">
+ <!--                   <form>
+                        <input id="tp{{tpConfig.id}}Answer" class="form-control" ng-show="tp{{tpConfig.id}}Ok" type="{{tpConfig.inputType}}" ng-model="tpConfig.answer"/>
+                        <button ng-show="tp{{tpConfig.id}}Ok" class="btn btn-success" ng-click="answerStep(tpConfig.id, tp{{tpConfig.id}}Answer, user)">Tenter votre chance</button>
+                        <p class="text-success" ng-show="tp{{tpConfig.id}}Ok">TP{{tpConfig.id}} OK</p>
+                    </form>-->
+                </div>
             </div>
         </div>
+                    <input id="tp4Answer" class="form-control" type="file" ng-model="tp4Answer"/>
+        <button ng-click="tmp()">test</button>
     </div>
 </div>
 

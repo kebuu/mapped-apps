@@ -13,6 +13,15 @@
     <script src="/webjars/stomp-websocket/2.3.1-1/stomp.min.js"></script>
     <script src="eventlog.js"></script>
     <title>Applications Cartographiques - EventLog</title>
+    
+    <style>
+        .answerOk {
+            color: green;
+        }
+        .answerKo {
+            color: red;
+        }
+    </style>
 </head>
 <body ng-app="app">
 
@@ -28,18 +37,15 @@
 
     <div id="eventContainer" class="container">
         <div class="event" ng-repeat="event in events">
-            <div ng-class="{answer-ok: event.successful, answer-ko: !event.successful}">
-                <img src="{{event.userAvatarUrl}}" />
-                <span ng-if="!event.successful">La tentative de réponse de {{event.user}} au {{event.tp}} a malheureusement échoué</span>
-                <span ng-if="event.successful">{{event.user}} a répondu correctement au {{event.tp}}. Il obtient la récompence {{rewards[event.tp].name}}</span>
-                <img src="/images/{{rewards[event.tp].url}}" ng-if="event.successful"/>
-                <!--<object type="audio/mpeg" width="0" height="0" data="monSon.mp3"> -->
-                    <!--<param name="filename" value="monSon.mp3" /> -->
-                    <!--<param name="autostart" value="true" /> -->
-                    <!--<param name="loop" value="false" /> -->
-                <!--</object>-->
+            <div ng-class="{answerOk: event.successful, answerKo: !event.successful}">
+                <img src="{{event.userAvatarUrl}}" width="80" />
+                <strong ng-if="!event.successful">La tentative de réponse de {{event.user}} au {{event.step | uppercase}} a malheureusement échoué</strong>
+                <strong ng-if="event.successful">{{event.user}} a répondu correctement au {{event.step | uppercase}}. Il obtient la récompense '{{rewards[event.step].name}}'</strong>
+                <img src="/images/{{rewards[event.step].url}}" ng-if="event.successful" width="150"/>
+                <audio autoplay>
+                    <source src="{{event.sound}}" type="audio/wav">
+                </audio>
             </div>
-            {{event | json}}
         </div>
     </div>
 </div>

@@ -2,26 +2,46 @@ var module = angular.module('app', []);
 
 module.controller('mainCtrl', function($scope) {
 
+    $scope.toto = '/sound/cymbals.wav';
+
     $scope.rewards = {
         tp1: {
-            name:'tp1Reward',
+            name:'Bien joué bonhomme',
             url:'bienJoueBonhomme.jpg'
         },
         tp2: {
-            name:'tp2Reward',
+            name:'Math',
             url:'mathLeblan.gif'
         },
         tp3: {
-            name:'tp3Reward',
+            name:'Bien joué ma biche',
             url:'bienJoueMaBiche.jpg'
         },
         tp4: {
-            name:'tp4Reward',
+            name:'M&M\'s',
             url:'bienJoueM&ms.jpg'
         },
     };
     $scope.events = [];
 
+    var getSound = function(stepEvent) {
+        var sound;
+        
+        if(!stepEvent.successful) {
+            sound = 'gasp_x.wav';
+        } else if(stepEvent.step === 'tp4') {
+            sound = 'gong.wav';
+        } else {
+            sound = 'cymbals.wav';
+        }
+        
+        return sound;
+    };
+
+    var getReward = function(stepEvent) {
+        return $scope.rewards[stepEvent.step];
+    };
+    
     var stompClient = null;
     var webSocketConnect = function connect() {
         var socket = new SockJS('/stepEvent');
@@ -31,6 +51,8 @@ module.controller('mainCtrl', function($scope) {
             stompClient.subscribe('/topic/stepEvent', function(message){
                 $scope.$apply(function() {
                     var data = JSON.parse(message.body);
+                    data.sound = '/sound/' + getSound(data);
+                    data.reward = getReward(data);
                     $scope.events.splice(0, 0, data);
                 });
             });

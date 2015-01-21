@@ -8,6 +8,17 @@ module.controller('mainCtrl', function($scope, $http) {
         return url = '/response/tp' + tpConfig.id + '?answer=' + answer + '&user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.loggedUserInfo.picture;
     };
     
+    var sendAnswer = function(tpConfig, answer) {
+        $http.get(buildUrl(tpConfig, answer))
+        .success(function(data) {
+            tpConfig.rewarded = true;
+            tpConfig.bonus = data;
+        })
+        .error(function() {
+            tpConfig.failed = true;
+        });
+    };
+    
     $scope.tpConfigs = [{
         id: 1,
         objectives : '...',
@@ -36,32 +47,28 @@ module.controller('mainCtrl', function($scope, $http) {
 
     $scope.answerStep = function(tpConfig) {
         tpConfig.failed = false;
+        tpConfig.lastAnswer = tpConfig.answer;
         var usedAnswer = tpConfig.answer ? tpConfig.answer : '';
         
-        if(tpConfig.id === 4 && tpConfig.answer) {
+        if(tpConfig.id === 4) {
             var file = document.getElementById('tp4Answer').files[0];
             if(file) {
+                tpConfig.lastAnswer = file.name;
                 var reader = new FileReader();
         
                 reader.onload = function(readerEvt) {
                     var binaryString = readerEvt.target.result;
-                    usedAnswer = btoa(binaryString);
+                    usedAnswer = CryptoJS.MD5(binaryString);
+                    sendAnswer(tpConfig, usedAnswer);
                 };
-        
+
                 reader.readAsBinaryString(file);
+            } else {
+                tpConfig.failed = true;
             }
+        } else {
+            sendAnswer(tpConfig, usedAnswer);
         }
-        
-        $http.get(buildUrl(tpConfig, usedAnswer))
-        .success(function(data) {
-            console.log('success');
-            tpConfig.rewarded = true;
-            tpConfig.bonus = data;
-        })
-        .error(function() {
-            console.log('error');
-            tpConfig.failed = true;
-        });
     };
 
     $scope.fakeUserConnection = function(tpConfig) {

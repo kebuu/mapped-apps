@@ -38,11 +38,11 @@ public class StepResponseController {
         String bonus = null;
 
         if (tp.equals("tp1")) {
-            bonus = workshopResponses.getTp1();
+            bonus = workshopBonuses.getTp1();
         } else if (tp.equals("tp2")) {
-            bonus = workshopResponses.getTp2();
+            bonus = workshopBonuses.getTp2();
         } else if (tp.equals("tp3")) {
-            bonus = workshopResponses.getTp3();
+            bonus = workshopBonuses.getTp3();
         }
 
         return bonus;

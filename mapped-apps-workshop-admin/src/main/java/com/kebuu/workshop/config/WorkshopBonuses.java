@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class WorkshopBonuses {
 
-    private String bonus1;
-    private String bonus2;
-    private String bonus3;
+    private String tp1;
+    private String tp2;
+    private String tp3;
 }

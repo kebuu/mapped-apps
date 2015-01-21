@@ -22,35 +22,41 @@
         </div>
     </div>
 
-    <div ng-repeat="tpConfig in tpConfigs | filter:{rewarded:true}">
-        <img src="/images/{{tpConfig.reward}}"/><br/>
-    </div>
-    
     <div class="container">
-        <div ng-repeat="tpConfig in tpConfigs">
+        <div>
+            <h3>Récompenses obtenues : </h3>
+            <img src="/images/bienJoueStart.jpg" ng-if="loggedUserInfo"/><br/>
+            <ul ng-repeat="tpConfig in tpConfigs | filter:{rewarded:true}">
+                <li><img src="/images/{{tpConfig.reward}}"/></li>
+            </ul>
+        </div>
+
+        <div ng-repeat="tpConfig in tpConfigs" ng-if="loggedUserInfo">
             <div class="row">
                 <div class="col-md-12">
                     <h3>TP {{tpConfig.id}}</h3>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <p>
                         <strong>Objectifs :</strong> {{tpConfig.objectives}}
                     </p>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
- <!--                   <form>
-                        <input id="tp{{tpConfig.id}}Answer" class="form-control" ng-show="tp{{tpConfig.id}}Ok" type="{{tpConfig.inputType}}" ng-model="tpConfig.answer"/>
-                        <button ng-show="tp{{tpConfig.id}}Ok" class="btn btn-success" ng-click="answerStep(tpConfig.id, tp{{tpConfig.id}}Answer, user)">Tenter votre chance</button>
-                        <p class="text-success" ng-show="tp{{tpConfig.id}}Ok">TP{{tpConfig.id}} OK</p>
-                    </form>-->
+                    <form>
+                        <input id="tp{{tpConfig.id}}Answer" class="form-control" type="{{tpConfig.inputType}}" ng-hide="tp{{tpConfig.id}}Ok"  ng-model="tpConfig.answer"/>
+                        <button ng-hide="tp{{tpConfig.id}}Ok" class="btn btn-success" ng-click="answerStep(tpConfig)" ng-disabled="!tpConfig.answer">Tenter votre chance</button>
+                        <p class="text-success" ng-show="tp{{tpConfig.id}}Ok">TP{{tpConfig.id}} OK. L'indice de pour cette étape est : {{tpConfig.bonus}}</p>
+                        <p class="text-error" ng-show="tpConfig.failed">'{{tpConfig.answer}}' n'est pas la bonne réponse</p>
+                    </form>
                 </div>
             </div>
         </div>
-                    <input id="tp4Answer" class="form-control" type="file" ng-model="tp4Answer"/>
-        <button ng-click="tmp()">test</button>
     </div>
+    <button ng-click="fakeUserConnection()">Fake connexion</button>
 </div>
 
 </body>

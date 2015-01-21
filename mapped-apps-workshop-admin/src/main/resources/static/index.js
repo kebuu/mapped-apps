@@ -1,5 +1,3 @@
-//OAuth.initialize('WYdOxw8gZZzIHtgIYKMMtqv_ujc');
-
 var module = angular.module('app', []);
 
 module.controller('mainCtrl', function($scope, $http) {
@@ -7,7 +5,7 @@ module.controller('mainCtrl', function($scope, $http) {
     $scope.loggedUserInfo = null;
 
     var buildUrl = function(tpConfig, answer) {
-        return url = '/tp' + tpConfig.id + '?answer=' + answer + '&user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.loggedUserInfo.picture;
+        return url = '/response/tp' + tpConfig.id + '?answer=' + answer + '&user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.loggedUserInfo.picture;
     };
     
     $scope.tpConfigs = [{
@@ -36,10 +34,11 @@ module.controller('mainCtrl', function($scope, $http) {
         rewarded : false
     }];
 
-    $scope.answerStep = function(tpConfig, answer, user) {
-        var usedAnswer = answer;
+    $scope.answerStep = function(tpConfig) {
+        tpConfig.failed = false;
+        var usedAnswer = tpConfig.answer ? tpConfig.answer : '';
         
-        if(tp === 4) {
+        if(tpConfig.id === 4 && tpConfig.answer) {
             var file = document.getElementById('tp4Answer').files[0];
             if(file) {
                 var reader = new FileReader();
@@ -54,20 +53,38 @@ module.controller('mainCtrl', function($scope, $http) {
         }
         
         $http.get(buildUrl(tpConfig, usedAnswer))
-        .success(function() {
+        .success(function(data) {
             console.log('success');
             tpConfig.rewarded = true;
+            tpConfig.bonus = data;
         })
         .error(function() {
             console.log('error');
+            tpConfig.failed = true;
         });
     };
 
+    $scope.fakeUserConnection = function(tpConfig) {
+        $scope.loggedUserInfo = {
+            family_name: "Tardella",
+            gender: "male",
+            given_name: "Christophe",
+            id: "116277890430412064611",
+            link: "https://plus.google.com/116277890430412064611",
+            locale: "en",
+            name: "Christophe Tardella",
+            picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
+        };
+    }
+
+//    OAuth.initialize('WYdOxw8gZZzIHtgIYKMMtqv_ujc');
 //    OAuth.popup('google', {cache: true}).done(function(result) {
 //        console.log('google connexion ok', result);
 //        result.get('https://www.googleapis.com/oauth2/v2/userinfo').done(function(data) {
-//            console.log('loggedUserInfo ok', data);
-//             $scope.loggedUserInfo = data;
+//            $scope.$apply(function() {
+//                console.log('loggedUserInfo ok', data);
+//                $scope.loggedUserInfo = data;
+//            });
 //        })
-//    });    
+//    });
 });

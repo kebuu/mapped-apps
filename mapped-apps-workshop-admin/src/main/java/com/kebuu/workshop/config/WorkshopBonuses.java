@@ -5,12 +5,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="zenika.workshop.response")
+@ConfigurationProperties(prefix="zenika.workshop.bonus")
 @Data
-public class WorkshopResponses {
+public class WorkshopBonuses {
 
-    private String tp1;
-    private String tp2;
-    private String tp3;
-    private String tp4;
+    private String bonus1;
+    private String bonus2;
+    private String bonus3;
 }

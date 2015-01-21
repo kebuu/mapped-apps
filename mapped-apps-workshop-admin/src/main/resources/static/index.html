@@ -10,6 +10,13 @@
     <script src="lib/oauth.min.js"></script>
     <script src="index.js"></script>
     <title>Applications Cartographiques - Quizz</title>
+
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
+    
 </head>
 <body ng-app="app">
 
@@ -24,35 +31,36 @@
     </div>
 
     <div class="container">
-        <div>
+        <div class="col-md-4">
             <h3>Récompenses obtenues : </h3>
-            <img src="/images/bienJoueStart.jpg" ng-if="loggedUserInfo"/><br/>
+            <img src="/images/bienJoueStart.jpg" ng-if="loggedUserInfo" width="300"/><br/>
             <ul ng-repeat="tpConfig in tpConfigs | filter:{rewarded:true}">
-                <li><img src="/images/{{tpConfig.reward}}" width="250"/></li>
+                <li><img src="/images/{{tpConfig.reward}}" width="300"/></li>
             </ul>
         </div>
-
-        <div ng-repeat="tpConfig in tpConfigs" ng-if="loggedUserInfo">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>TP {{tpConfig.id}}</h3>
+        <div class="col-md-8">
+            <div ng-repeat="tpConfig in tpConfigs" ng-if="loggedUserInfo">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>TP {{tpConfig.id}}</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p>
-                        <strong>Objectifs :</strong> {{tpConfig.objectives}}
-                    </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <strong>Objectifs :</strong> {{tpConfig.objectives}}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <form>
-                        <input id="tp{{tpConfig.id}}Answer" class="form-control" type="{{tpConfig.inputType}}" ng-hide="tpConfig.rewarded" ng-model="tpConfig.answer"/>
-                        <button ng-hide="tpConfig.rewarded" class="btn btn-success" ng-click="answerStep(tpConfig)" ng-disabled="!tpConfig.answer && tpConfig.id !== 4">Tenter votre chance</button>
-                        <p class="text-success" ng-show="tpConfig.rewarded"><strong>TP{{tpConfig.id}} OK.</strong><strong ng-show="tpConfig.id !== 4"> L'indice pour cette étape est : {{tpConfig.bonus}}</strong></p>
-                        <p class="text-error" ng-show="tpConfig.failed"><strong>'{{tpConfig.lastAnswer}}' n'est pas la bonne réponse</strong></p>
-                    </form>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form>
+                            <input id="tp{{tpConfig.id}}Answer" class="form-control" type="{{tpConfig.inputType}}" ng-hide="tpConfig.rewarded" ng-model="tpConfig.answer"/>
+                            <button ng-hide="tpConfig.rewarded" class="btn btn-success" ng-click="answerStep(tpConfig)" ng-disabled="!tpConfig.answer && tpConfig.id !== 4">Tenter votre chance</button>
+                            <p class="text-success" ng-show="tpConfig.rewarded"><strong>TP{{tpConfig.id}} OK.</strong><strong ng-show="tpConfig.id !== 4"> L'indice pour cette étape est : {{tpConfig.bonus}}</strong></p>
+                            <p class="text-error" ng-show="tpConfig.failed"><strong>'{{tpConfig.lastAnswer}}' n'est pas la bonne réponse</strong></p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

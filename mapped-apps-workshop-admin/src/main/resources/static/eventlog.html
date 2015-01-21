@@ -28,6 +28,17 @@
 
     <div id="eventContainer" class="container">
         <div class="event" ng-repeat="event in events">
+            <div ng-class="{answer-ok: event.successful, answer-ko: !event.successful}">
+                <img src="{{event.userAvatarUrl}}" />
+                <span ng-if="!event.successful">La tentative de réponse de {{event.user}} au {{event.tp}} a malheureusement échoué</span>
+                <span ng-if="event.successful">{{event.user}} a répondu correctement au {{event.tp}}. Il obtient la récompence {{rewards[event.tp].name}}</span>
+                <img src="/images/{{rewards[event.tp].url}}" ng-if="event.successful"/>
+                <!--<object type="audio/mpeg" width="0" height="0" data="monSon.mp3"> -->
+                    <!--<param name="filename" value="monSon.mp3" /> -->
+                    <!--<param name="autostart" value="true" /> -->
+                    <!--<param name="loop" value="false" /> -->
+                <!--</object>-->
+            </div>
             {{event | json}}
         </div>
     </div>

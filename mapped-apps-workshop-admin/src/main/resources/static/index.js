@@ -7,7 +7,7 @@ module.controller('mainCtrl', function($scope, $http) {
     $scope.loggedUserInfo = null;
 
     var buildUrl = function(tpConfig, answer) {
-        return url = '/tp' + tpConfig.id + '/' + answer + '?user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.loggedUserInfo.picture;
+        return url = '/tp' + tpConfig.id + '?answer=' + answer + '&user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.loggedUserInfo.picture;
     };
     
     $scope.tpConfigs = [{

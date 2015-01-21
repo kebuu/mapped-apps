@@ -17,9 +17,9 @@ public class StepResponseController {
     @Autowired private WorkshopResponses workshopResponses;
     @Autowired private SimpMessagingTemplate webSocketTemplate;
 
-    @RequestMapping("/{tp:tp(?:[1-4])}/{answer}")
+    @RequestMapping("/{tp:tp(?:[1-4])}")
     public ResponseEntity<Void> answerTp1(@PathVariable("tp") String tp,
-                                          @PathVariable("answer") String answer,
+                                          @RequestParam("answer") String answer,
                                           @RequestParam("user") String user,
                                           @RequestParam(value = "userAvatarUrl", required = false) String userAvatarUrl) {
         boolean isAnswerCorrect = isAnswerCorrect(tp, answer);
@@ -41,6 +41,8 @@ public class StepResponseController {
             isAnswerCorrect = workshopResponses.getTp2().equalsIgnoreCase(answer);
         } else if (tp.equals("tp3")) {
             isAnswerCorrect = workshopResponses.getTp3().equals(answer);
+        } else if (tp.equals("tp4")) {
+            isAnswerCorrect = workshopResponses.getTp4().equals(answer);
         }
         
         return isAnswerCorrect;

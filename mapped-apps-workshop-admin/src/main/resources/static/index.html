@@ -23,7 +23,7 @@
     </div>
 
     <div ng-repeat="tpConfig in tpConfigs | filter:{rewarded:true}">
-        {{tpConfig}}
+        <img src="/images/{{tpConfig.reward}}"/><br/>
     </div>
     
     <div class="container">

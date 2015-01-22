@@ -20,28 +20,37 @@ module.controller('mainCtrl', function($scope, $http) {
     };
     
     $scope.tpConfigs = [{
+        id: 0,
+        reward : 'bienJoueStart.jpg',
+        rewardName:'Starting block',
+        rewarded : false
+    }, {
         id: 1,
-        objectives : '...',
+        objectives : 'Instancier une carte et lui ajouter des couches, des marqueurs et une floppé de contrôles',
         inputType : 'text',
         reward : 'bienJoueBonhomme.jpg',
+        rewardName:'Bien joué bonhomme',
         rewarded : false
     },{
         id: 2,
-        objectives : '...',
+        objectives : 'Développer une mini application permettant de trouver la fontaine d\'eau potable la plus proche dans lyon',
         inputType : 'text',
         reward : 'mathLeblan.gif',
+        rewardName:'Matt Leblanc',
         rewarded : false
     },{
         id: 3,
-        objectives : '...',
+        objectives : 'Développer une mini application permettant de visualiser et de "gérer" les arbres régient par la ville de Lyon',
         inputType : 'text',
         reward : 'bienJoueMaBiche.jpg',
+        rewardName:'Bien joué ma biche',
         rewarded : false
     },{
         id: 4,
-        objectives : '...',
+        objectives : 'Exporter une carte en png',
         inputType : 'file',
         reward : 'bienJoueM&ms.jpg',
+        rewardName:'M&M\'s',
         rewarded : false
     }];
 
@@ -82,6 +91,8 @@ module.controller('mainCtrl', function($scope, $http) {
             name: "Christophe Tardella",
             picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
         };
+
+        sendAnswer($scope.tpConfigs[0], "answer");
     }
 
 //    OAuth.initialize('WYdOxw8gZZzIHtgIYKMMtqv_ujc');
@@ -91,6 +102,7 @@ module.controller('mainCtrl', function($scope, $http) {
 //            $scope.$apply(function() {
 //                console.log('loggedUserInfo ok', data);
 //                $scope.loggedUserInfo = data;
+//                sendAnswer($scope.tpConfigs[0], "answer");
 //            });
 //        })
 //    });

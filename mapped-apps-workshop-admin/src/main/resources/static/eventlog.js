@@ -5,12 +5,16 @@ module.controller('mainCtrl', function($scope) {
     $scope.toto = '/sound/cymbals.wav';
 
     $scope.rewards = {
+        tp0: {
+            name:'Starting block',
+            url:'bienJoueStart.jpg'
+        },
         tp1: {
             name:'Bien joué bonhomme',
             url:'bienJoueBonhomme.jpg'
         },
         tp2: {
-            name:'Math',
+            name:'Matt Leblanc',
             url:'mathLeblan.gif'
         },
         tp3: {

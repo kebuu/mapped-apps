@@ -19,7 +19,7 @@ public class StepResponseController {
     @Autowired private WorkshopBonuses workshopBonuses;
     @Autowired private SimpMessagingTemplate webSocketTemplate;
 
-    @RequestMapping("/{tp:tp[1-4]}")
+    @RequestMapping("/{tp:tp[0-4]}")
     public ResponseEntity<String> answerTp1(@PathVariable("tp") String tp,
                                           @RequestParam("answer") String answer,
                                           @RequestParam("user") String user,
@@ -59,6 +59,8 @@ public class StepResponseController {
             isAnswerCorrect = workshopResponses.getTp3().equalsIgnoreCase(answer);
         } else if (tp.equals("tp4")) {
             isAnswerCorrect = workshopResponses.getTp4().equalsIgnoreCase(answer);
+        } else if (tp.equals("tp0")) {
+            isAnswerCorrect = true;
         }
         
         return isAnswerCorrect;

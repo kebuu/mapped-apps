@@ -1,0 +1,35 @@
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.350585937499999,
+          45.63708709571876
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.218994140625,
+          45.3444241045224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.856689453125,
+          45.089035564831036
+        ]
+      }
+    }
+
+    -> bordeaux(6)

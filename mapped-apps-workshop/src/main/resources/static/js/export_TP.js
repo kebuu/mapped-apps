@@ -5,7 +5,7 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
                     -> Le site torop.net permet de geolocaliser une adresse : http://www.torop.net/coordonnees-gps.php (format à utiliser : numéro rue nomDeLaRue, ville)
                 - Zoomer sur le marqueur avec un zoom de 17
                 - Jeter un coup d'oeil à la fonction exportFn
-                - Cliquer sur le bouton 'Export' et enregistrer l'image (au bout de quelque seconds vous devriez avoir une popup de téléchargement)
+                - Cliquer sur le bouton 'Export' et enregistrer l'image (au bout de quelque secondes vous devriez avoir une popup de téléchargement)
                 - Envoyer cette image en guise de réponse
 */
 

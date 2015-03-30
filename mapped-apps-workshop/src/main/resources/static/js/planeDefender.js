@@ -1,4 +1,4 @@
-var map = L.map('map').setView([47.090717, 2.384075], 6);
+var map = L.map('map', {drawControl: true}).setView([47.090717, 2.384075], 6);
 var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
 /* STEP Bonus : - Ajouter un marker à l'adresse que vous avez trouvée en faisant les steps Bonus des autres TPs
@@ -9,11 +9,17 @@ var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
                 - Envoyer cette image en guise de réponse
 */
 
-var exportPNGElement = document.getElementById('export-png');
+map.on('draw:created', function (e) {
+console.log(e);
 
-var exportFn = function() {
-    leafletImage(map, function(err, canvas) {
-        exportPNGElement.href = canvas.toDataURL('image/png');
-        exportPNGElement.click();
-    });
-};
+var type = e.layerType,
+        layer = e.layer;
+
+    if (type === 'marker') {
+        // Do marker specific actions
+    }
+
+    // Do whatever else you need to. (save to db, add to map etc)
+    map.addLayer(layer);
+
+});

@@ -1,4 +1,19 @@
-var map = L.map('map', {drawControl: true}).setView([47.090717, 2.384075], 7);
+var drawControl = new L.Control.Draw({
+    draw: {
+        rectangle : false,
+        circle : false,
+        marker : false,
+            polygon: {
+                allowIntersection: false,
+                showArea: true,
+                metric : true
+            }
+    }
+});
+
+var map = L.map('map').setView([47.090717, 2.384075], 6);
+map.addControl(drawControl);
+
 var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
 var planeIcon = L.icon({ iconUrl: '/images/plane.png', iconSize: [20, 26]});
@@ -7,10 +22,10 @@ var missile2Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]})
 var missile3Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]});
 var explosionIcon = L.icon({ iconUrl: '/images/explosion.png', iconSize: [20, 26]});
 
-var missile1Marker = L.marker(kebUtil.missile1.coords[0], {icon: missile1Icon}).addTo(map);
-var missile2Marker = L.marker(kebUtil.missile2.coords[0], {icon: missile2Icon});
-var missile3Marker = L.marker(kebUtil.missile3.coords[0], {icon: missile3Icon});
-var planeMarker = L.marker(kebUtil.planeTravelCoords[0], {icon: planeIcon}).addTo(map);
+var missile1Marker = L.rotatedMarker(kebUtil.missile1.coords[0], {icon: missile1Icon, angle: -50}).addTo(map);
+var missile2Marker = L.rotatedMarker(kebUtil.missile2.coords[0], {icon: missile2Icon, angle: 105}).addTo(map);
+var missile3Marker = L.rotatedMarker(kebUtil.missile3.coords[0], {icon: missile3Icon, angle: 5}).addTo(map);
+var planeMarker = L.rotatedMarker(kebUtil.planeTravelCoords[0], {icon: planeIcon, angle: 180}).addTo(map);
 
 var missiles = {
     missile1 : {
@@ -33,6 +48,20 @@ var isPlaneDestroyed = function() {
         missile3Marker.getLatLng().equals(planeMarker.getLatLng());
 };
 
+var rotatePlane = function(gameStep) {
+    var step1 = L.latLng(kebUtil.planeTravelCoords[gameStep]);
+    var step2 = L.latLng(kebUtil.planeTravelCoords[gameStep + 1]);
+
+    if(!!step1 && !!step2) {
+        var point1 = map.project(step1);
+        var point2 = map.project(step2);
+
+        var angle = L.LineUtil.PolylineDecorator.computeAngle(point2, point1);
+        planeMarker.options.angle = angle + 180;
+        console.log(angle);
+    }
+};
+
 var movePlane = function(gameStep) {
     planeMarker.setLatLng(kebUtil.planeTravelCoords[gameStep]);
 };
@@ -51,11 +80,16 @@ var moveMissile = function(gameStep, missileNumber) {
 var gameStep = 1;
 var planeTravelInterval = setInterval(function() {
     L.marker(planeMarker.getLatLng()).addTo(map);
+    rotatePlane(gameStep);
     movePlane(gameStep);
     moveMissile(gameStep, 1);
 
     if(isPlaneDestroyed()) {
+        planeMarker.options.angle = 0;
         planeMarker.setIcon(explosionIcon);
+        missile1Marker.setOpacity(0);
+        missile2Marker.setOpacity(0);
+        missile3Marker.setOpacity(0);
         clearInterval(planeTravelInterval);
     }
 

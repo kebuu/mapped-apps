@@ -16,6 +16,7 @@ map.addControl(drawControl);
 
 var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
+var defences = [];
 var planeIcon = L.icon({ iconUrl: '/images/plane.png', iconSize: [20, 26]});
 var missile1Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]});
 var missile2Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]});
@@ -23,8 +24,8 @@ var missile3Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]})
 var explosionIcon = L.icon({ iconUrl: '/images/explosion.png', iconSize: [20, 26]});
 
 var missile1Marker = L.rotatedMarker(kebUtil.missile1.coords[0], {icon: missile1Icon, angle: -50}).addTo(map);
-var missile2Marker = L.rotatedMarker(kebUtil.missile2.coords[0], {icon: missile2Icon, angle: 105}).addTo(map);
-var missile3Marker = L.rotatedMarker(kebUtil.missile3.coords[0], {icon: missile3Icon, angle: 5}).addTo(map);
+var missile2Marker = L.rotatedMarker(kebUtil.missile2.coords[0], {icon: missile2Icon, angle: 105, opacity:0}).addTo(map);
+var missile3Marker = L.rotatedMarker(kebUtil.missile3.coords[0], {icon: missile3Icon, angle: 5, opacity:0}).addTo(map);
 var planeMarker = L.rotatedMarker(kebUtil.planeTravelCoords[0], {icon: planeIcon, angle: 180}).addTo(map);
 
 var missiles = {
@@ -58,11 +59,14 @@ var rotatePlane = function(gameStep) {
 
         var angle = L.LineUtil.PolylineDecorator.computeAngle(point2, point1);
         planeMarker.options.angle = angle + 180;
-        console.log(angle);
     }
 };
 
 var movePlane = function(gameStep) {
+    planeMarker.setLatLng(kebUtil.planeTravelCoords[gameStep]);
+};
+
+var getMissileStopCoords = function(gameStep) {
     planeMarker.setLatLng(kebUtil.planeTravelCoords[gameStep]);
 };
 
@@ -71,9 +75,18 @@ var moveMissile = function(gameStep, missileNumber) {
     var missileInfo = kebUtil[missileKey];
 
     if(missileInfo.startStep === gameStep) {
-        missiles[missileKey].marker.addTo(map);
-    } else if(!missiles[missileKey].destroyed) {
-        missiles[missileKey].marker.setLatLng(missileInfo.coords[gameStep - missileInfo.startStep]);
+        missiles[missileKey].marker.setOpacity(1);
+    } else {
+        var missileStopCoords = getMissileStopCoords(defences, currentCoords, nextCoords);
+
+        if(missileStopCoords) {
+            missiles[missileKey].marker.options.angle = 0;
+            missiles[missileKey].marker.setIcon(explosionIcon);
+            missiles[missileKey].marker.setLatLng(missileStopCoords);
+            missiles[missileKey].marker.destroyed = true;
+        } else if(missileInfo.startStep < gameStep && !missiles[missileKey].destroyed) {
+            missiles[missileKey].marker.setLatLng(missileInfo.coords[gameStep - missileInfo.startStep]);
+        }
     }
 };
 
@@ -83,6 +96,8 @@ var planeTravelInterval = setInterval(function() {
     rotatePlane(gameStep);
     movePlane(gameStep);
     moveMissile(gameStep, 1);
+    moveMissile(gameStep, 2);
+    moveMissile(gameStep, 3);
 
     if(isPlaneDestroyed()) {
         planeMarker.options.angle = 0;
@@ -110,11 +125,11 @@ var planeTravelInterval = setInterval(function() {
 map.on('draw:created', function (e) {
 console.log(e);
 
-var type = e.layerType,
-        layer = e.layer;
+var type = e.layerType;
+var layer = e.layer;
 
-    if (type === 'marker') {
-        // Do marker specific actions
+    if (type === 'polyline') {
+        defences.push();
     }
 
     // Do whatever else you need to. (save to db, add to map etc)

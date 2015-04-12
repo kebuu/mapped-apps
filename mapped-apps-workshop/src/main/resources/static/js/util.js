@@ -120,15 +120,11 @@ var kebUtil = {
     },
 
     toXY : function(latLng) {
-        var point =  L.Projection.Mercator.project(latLng);
-        console.log('xy', point);
-        return point;
+        return L.Projection.Mercator.project(latLng);
     },
 
     toLonLatProj : function(point) {
-        var latLng =  L.Projection.Mercator.unproject(point);
-        console.log('latLng', latLng);
-        return latLng;
+        return L.Projection.Mercator.unproject(point);
     }
 };
 

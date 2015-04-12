@@ -11,7 +11,7 @@ var drawControl = new L.Control.Draw({
     }
 });
 
-var map = L.map('map').setView([47.090717, 2.384075], 6);
+var map = L.map('map').setView([45.090717, 2.384075], 6);
 map.addControl(drawControl);
 
 var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
@@ -23,7 +23,7 @@ var missile2Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]})
 var missile3Icon = L.icon({ iconUrl: '/images/missile.png', iconSize: [20, 26]});
 var explosionIcon = L.icon({ iconUrl: '/images/explosion.png', iconSize: [20, 26]});
 
-var missile1Marker = L.rotatedMarker(kebUtil.missile1.coords[0], {icon: missile1Icon, angle: -50}).addTo(map);
+var missile1Marker = L.rotatedMarker(kebUtil.missile1.coords[0], {icon: missile1Icon, angle: -50, opacity:0}).addTo(map);
 var missile2Marker = L.rotatedMarker(kebUtil.missile2.coords[0], {icon: missile2Icon, angle: 105, opacity:0}).addTo(map);
 var missile3Marker = L.rotatedMarker(kebUtil.missile3.coords[0], {icon: missile3Icon, angle: 5, opacity:0}).addTo(map);
 var planeMarker = L.rotatedMarker(kebUtil.planeTravelCoords[0], {icon: planeIcon, angle: 180}).addTo(map);
@@ -66,8 +66,39 @@ var movePlane = function(gameStep) {
     planeMarker.setLatLng(kebUtil.planeTravelCoords[gameStep]);
 };
 
-var getMissileStopCoords = function(gameStep) {
-    planeMarker.setLatLng(kebUtil.planeTravelCoords[gameStep]);
+var getMissileStopCoords = function(defences, currentCoords, nextCoords) {
+    if(!currentCoords || !nextCoords || !defences.length) {
+        return null;
+    } else {
+        var currentPoint = kebUtil.toXY(L.latLng(currentCoords));
+        var nextPointPoint = kebUtil.toXY(L.latLng(nextCoords));
+        var missileDirection = { "type": "LineString", "coordinates": [[currentPoint.x, currentPoint.y], [nextPointPoint.x, nextPointPoint.y]] };
+
+        return _.chain(defences)
+            .filter(function(defence) {
+                console.log(' defence.geometry.type',  defence.geometry.type);
+                return defence.geometry.type === "LineString";
+            })
+            .map(function(defence) {
+                var points =_.map(defence.geometry.coordinates, function(coordinates) {
+                    var point = kebUtil.toXY(L.latLng(_.clone(coordinates).reverse()));
+                    return [point.x, point.y];
+                });
+                var defenceDirection = { "type": "LineString", "coordinates": points };
+                console.log('defenceDirection', missileDirection, defenceDirection);
+                var inter =  gju.lineStringsIntersect(missileDirection, defenceDirection);
+                console.log(inter);
+                return inter;
+            })
+            .filter(function(intersections) {
+                return !!intersections;
+            })
+            .map(function(intersections) {
+                var intersectionCoordinates = intersections[0].coordinates;
+                return kebUtil.toLonLatProj(L.point(intersectionCoordinates[1], intersectionCoordinates[0]));
+            })
+            .value();
+    }
 };
 
 var moveMissile = function(gameStep, missileNumber) {
@@ -76,16 +107,18 @@ var moveMissile = function(gameStep, missileNumber) {
 
     if(missileInfo.startStep === gameStep) {
         missiles[missileKey].marker.setOpacity(1);
-    } else {
-        var missileStopCoords = getMissileStopCoords(defences, currentCoords, nextCoords);
+    } else if(!missiles[missileKey].destroyed) {
+        var missileStopLatLng = getMissileStopCoords(defences, missileInfo.coords[gameStep - missileInfo.startStep], missileInfo.coords[gameStep - missileInfo.startStep + 1]);
 
-        if(missileStopCoords) {
+            console.log('missileStopLatLng', missileStopLatLng);// [{"type":"Point","coordinates":[2,3]},{"type":"Point","coordinates":[2,4]}]
+        if(missileStopLatLng && missileStopLatLng.length) {
             missiles[missileKey].marker.options.angle = 0;
+            console.log(missileStopLatLng[0]);
+            missiles[missileKey].marker.setLatLng(missileStopLatLng[0]);
             missiles[missileKey].marker.setIcon(explosionIcon);
-            missiles[missileKey].marker.setLatLng(missileStopCoords);
-            missiles[missileKey].marker.destroyed = true;
-        } else if(missileInfo.startStep < gameStep && !missiles[missileKey].destroyed) {
-            missiles[missileKey].marker.setLatLng(missileInfo.coords[gameStep - missileInfo.startStep]);
+            missiles[missileKey].destroyed = true;
+        } else if(missileInfo.startStep < gameStep) {
+            missiles[missileKey].marker.setLatLng(missileInfo.coords[gameStep - missileInfo.startStep + 1]);
         }
     }
 };
@@ -102,17 +135,14 @@ var planeTravelInterval = setInterval(function() {
     if(isPlaneDestroyed()) {
         planeMarker.options.angle = 0;
         planeMarker.setIcon(explosionIcon);
-        missile1Marker.setOpacity(0);
-        missile2Marker.setOpacity(0);
-        missile3Marker.setOpacity(0);
         clearInterval(planeTravelInterval);
     }
 
     gameStep++;
-    if(gameStep === kebUtil.planeTravelCoords.length) {
+    if(gameStep === kebUtil.planeTravelCoords.length || isPlaneDestroyed()) {
         clearInterval(planeTravelInterval);
     }
-}, 1000);
+}, 2000);
 
 /* STEP Bonus : - Ajouter un marker à l'adresse que vous avez trouvée en faisant les steps Bonus des autres TPs
                     -> Le site torop.net permet de geolocaliser une adresse : http://www.torop.net/coordonnees-gps.php (format à utiliser : numéro rue nomDeLaRue, ville)
@@ -123,13 +153,11 @@ var planeTravelInterval = setInterval(function() {
 */
 
 map.on('draw:created', function (e) {
-console.log(e);
-
 var type = e.layerType;
 var layer = e.layer;
 
     if (type === 'polyline') {
-        defences.push();
+        defences.push(e.layer.toGeoJSON());
     }
 
     // Do whatever else you need to. (save to db, add to map etc)

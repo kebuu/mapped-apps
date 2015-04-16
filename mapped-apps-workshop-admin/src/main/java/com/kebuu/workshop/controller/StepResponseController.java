@@ -6,6 +6,7 @@ import com.kebuu.workshop.dto.StepEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,8 @@ public class StepResponseController {
             bonus = workshopBonuses.getTp2();
         } else if (tp.equals("tp3")) {
             bonus = workshopBonuses.getTp3();
+        } else if (tp.equals("tp4")) {
+            bonus = workshopBonuses.getTp4();
         }
 
         return bonus;
@@ -58,7 +61,16 @@ public class StepResponseController {
         } else if (tp.equals("tp3")) {
             isAnswerCorrect = workshopResponses.getTp3().equalsIgnoreCase(answer);
         } else if (tp.equals("tp4")) {
-            isAnswerCorrect = workshopResponses.getTp4().equalsIgnoreCase(answer);
+            try {
+                Integer answerInt = NumberUtils.parseNumber(answer, Integer.class);
+                if (answerInt >= workshopResponses.getTp4() - 100 && answerInt <= workshopResponses.getTp4() + 100) {
+                    isAnswerCorrect = true;
+                }
+            } catch (IllegalArgumentException e) {
+                // Nothing
+            }
+        } else if (tp.equals("tp5")) {
+            isAnswerCorrect = workshopResponses.getTp5().equalsIgnoreCase(answer);
         } else if (tp.equals("tp0")) {
             isAnswerCorrect = true;
         }

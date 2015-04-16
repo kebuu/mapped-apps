@@ -12,4 +12,5 @@ public class WorkshopBonuses {
     private String tp1;
     private String tp2;
     private String tp3;
+    private String tp4;
 }

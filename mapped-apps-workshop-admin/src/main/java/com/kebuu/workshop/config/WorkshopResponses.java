@@ -12,5 +12,6 @@ public class WorkshopResponses {
     private String tp1;
     private String tp2;
     private String tp3;
-    private String tp4;
+    private Integer tp4;
+    private String tp5;
 }

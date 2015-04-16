@@ -26,7 +26,7 @@ module.controller('mainCtrl', function($scope, $http) {
         rewarded : false
     }, {
         id: 1,
-        objectives : 'Instancier une carte et lui ajouter des couches, des marqueurs et une floppé de contrôles',
+        objectives : 'Instancier une carte et lui ajouter des couches, des marqueurs et une flopée de contrôles',
         inputType : 'text',
         reward : 'bienJoueBonhomme.jpg',
         rewardName:'Bien joué bonhomme',
@@ -35,8 +35,8 @@ module.controller('mainCtrl', function($scope, $http) {
         id: 2,
         objectives : 'Développer une mini application permettant de trouver la fontaine d\'eau potable la plus proche dans lyon',
         inputType : 'text',
-        reward : 'mathLeblan.gif',
-        rewardName:'Matt Leblanc',
+        reward : 'good-job.jpg',
+        rewardName:'Lebowski',
         rewarded : false
     },{
         id: 3,
@@ -47,8 +47,15 @@ module.controller('mainCtrl', function($scope, $http) {
         rewarded : false
     },{
         id: 4,
-        objectives : 'Exporter une carte en png',
-        inputType : 'file',
+        objectives : 'Développer un micro jeu de défence d\'avion',
+        inputType : 'text',
+        reward : 'jesus.jpg',
+        rewardName:'Jésus',
+        rewarded : false
+    },{
+        id: 5,
+        objectives : 'Prouvez que vous avez réussi tous les TP en effectuant le calcul suivant : (TP1 * TP2 * TP3) / TP4. Indiquez le résultat arrondi à quatre chiffre après la virgule',
+        inputType : 'text',
         reward : 'bienJoueM&ms.jpg',
         rewardName:'M&M\'s',
         rewarded : false
@@ -58,26 +65,7 @@ module.controller('mainCtrl', function($scope, $http) {
         tpConfig.failed = false;
         tpConfig.lastAnswer = tpConfig.answer;
         var usedAnswer = tpConfig.answer ? tpConfig.answer : '';
-        
-        if(tpConfig.id === 4) {
-            var file = document.getElementById('tp4Answer').files[0];
-            if(file) {
-                tpConfig.lastAnswer = file.name;
-                var reader = new FileReader();
-        
-                reader.onload = function(readerEvt) {
-                    var binaryString = readerEvt.target.result;
-                    usedAnswer = CryptoJS.MD5(binaryString);
-                    sendAnswer(tpConfig, usedAnswer);
-                };
-
-                reader.readAsBinaryString(file);
-            } else {
-                tpConfig.failed = true;
-            }
-        } else {
-            sendAnswer(tpConfig, usedAnswer);
-        }
+        sendAnswer(tpConfig, usedAnswer);
     };
 
     $scope.fakeUserConnection = function(tpConfig) {

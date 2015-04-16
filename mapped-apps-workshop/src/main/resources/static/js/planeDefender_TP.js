@@ -1,19 +1,28 @@
-var map = L.map('map').setView([47.090717, 2.384075], 6);
-var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+var map = L.map('map').setView([45.090717, 2.384075], 6);
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 
-/* STEP Bonus : - Ajouter un marker à l'adresse que vous avez trouvée en faisant les steps Bonus des autres TPs
-                    -> Le site torop.net permet de geolocaliser une adresse : http://www.torop.net/coordonnees-gps.php (format à utiliser : numéro rue nomDeLaRue, ville)
-                - Zoomer sur le marqueur avec un zoom de 17
-                - Jeter un coup d'oeil à la fonction exportFn
-                - Cliquer sur le bouton 'Export' et enregistrer l'image (au bout de quelque seconds vous devriez avoir une popup de téléchargement)
-                - Envoyer cette image en guise de réponse
-*/
+var defences = [];
 
-var exportPNGElement = document.getElementById('export-png');
+/* STEP 1 : - Ajouter le controle de dessin
+                -> doc : https://github.com/Leaflet/Leaflet.draw#using-the-plugin
+            - Ne garder la possibilité de faire que des lignes
+                -> doc : https://github.com/Leaflet/Leaflet.draw#controldraw
+ */
 
-var exportFn = function() {
-    leafletImage(map, function(err, canvas) {
-        exportPNGElement.href = canvas.toDataURL('image/png');
-        exportPNGElement.click();
-    });
-};
+/* STEP 2 : - Dessiner des lignes et les ajouter à la carte
+                -> doc : https://github.com/Leaflet/Leaflet.draw#drawcreated
+ */
+
+/* STEP 3 : - Defender votre avion
+                -> Ajouter les lignes dessinés au tableau de defence (definie ci-dessus) en les convertissant
+                    préalabelement en GeoJson
+                -> doc : http://leafletjs.com/reference.html#polyline-togeojson
+            - Bloquer les missiles en dessinant des defences
+ */
+
+/* STEP M&M's : - Quel est la distance parcouru pas l'avion (à la centaine de mètre près) ?
+ */
+
+/* STEP Bonus : - Activer la modification du dessin
+                    -> doc : https://github.com/Leaflet/Leaflet.draw#adding-the-edit-toolbar
+ */

@@ -3,16 +3,17 @@ var zenikaLyon = [45.762186, 4.862247];
 var zenikaParis = [48.878933, 2.328639];
 
 
-/* STEP 1 : - Ajouter une carte -> un div#map a été prévu pour accueillir la carte
-            - Ajouter un fond de plan tuilé (tile) avec l'option "attribution" : Zenika - Technozaure | OSM -> url de OpenStreetMap : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-            - Centrer la carte sur la France avec un niveau de zoom de 5
-            - Ajouter une "attribution"
+/* STEP 1 : - Ajouter une carte
+                -> un div#map a été prévu pour accueillir la carte
+            - Ajouter un fond de plan tuilé (tile) avec l'option "attribution" : Zenika - Technozaure | OSM
+                -> url de OpenStreetMap : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+            - Centrer la carte sur la France (cf. haut du fichier) avec un niveau de zoom de 5
             - doc map: http://leafletjs.com/reference.html#map-class
             - doc tile layer: http://leafletjs.com/reference.html#tilelayer
 */
 
-/* STEP 2 : - Ajouter une marker sur zenika Lyon avec une popup contenant le texte 'Zenika Lyon'
-            - Ajouter une marker sur zenika Paris avec une popup contenant le texte 'Zenika Paris' et une icone personnalisée:
+/* STEP 2 : - Ajouter un marker sur zenika Lyon avec une popup contenant le texte 'Zenika Lyon'
+            - Ajouter un marker sur zenika Paris avec une popup contenant le texte 'Zenika Paris' et une icone personnalisée:
                 -> url de l'icone : /images/logo-zenika.jpg
                 -> taille de l'icone : [20, 26]
             - doc : http://leafletjs.com/reference.html#marker
@@ -26,16 +27,16 @@ var zenikaParis = [48.878933, 2.328639];
                 -> format : image/png
                 -> transparence : à votre avis ?
                 -> doc : http://leafletjs.com/reference.html#tilelayer-wms
-            - Implementer la fonction zoomerSurLyon en centrant la carte sur Lyon avec un zoom de 14
+            - Implementer la fonction zoomToLyon (cf. bas du fichier) en centrant la carte sur Lyon avec un zoom de 14
 */
 
 /* STEP 4 : - Ajouter le control "Scale" en bas à droite de la carte:
                 -> doc http://leafletjs.com/reference.html#control-scale
             - Ajouter le control "MousePosition" à la carte:
                 -> doc https://github.com/ardhi/Leaflet.MousePosition#leafletmouseposition
-                -> Penser à créer un layer spécifique pour le control
-            - Ajouter le control "MiniMap" à la carte en utilisant en fond de plan:
+            - Ajouter le control "MiniMap" à la carte en utilisant OSM en fond de plan:
                 -> doc https://github.com/Norkart/Leaflet-MiniMap#leafletminimap
+                -> Penser à créer un layer spécifique pour le control
             - Ajouter le control "ZoomInfo" à la carte:
                 -> Il s'agit d'un control que j'ai réalisé : kebUtil.control.zoomInfo(map).addTo(map);
 */
@@ -49,10 +50,10 @@ var zenikaParis = [48.878933, 2.328639];
                 -> doc http://leafletjs.com/reference.html#control-layers
 */
 
-/* STEP M&M's : - Quelle est la valeur de l'échelle en km au niveau de zoom 9 ?
+/* STEP M&M's : - Quelle est la valeur de l'échelle (control "Scale") au niveau de zoom 9 (en km) ?
 */
 
-/* STEP Bonus : - Regarder la doc des différents controls pour adapter changer leur comportement
+/* STEP Bonus : - Regarder la doc des différents controls pour adapter/changer leur comportement
 */
 
 function zoomToLyon() {

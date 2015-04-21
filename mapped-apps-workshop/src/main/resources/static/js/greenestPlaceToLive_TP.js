@@ -49,7 +49,7 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 kebUtil.control.zoomInfo(map).addTo(map);
 
 /* Contexte :   Une carte avec un fond de plan est déjà créée et centrée sur Lyon. Le control zoomInfo a été ajouté
-                Au chargement de la page, une partie des données des arbres gérés par la ville de lyon sont chargés au format geoJson via la fonction getGeoJsonData
+                Au chargement de la page, une partie des données des arbres gérés par la ville de Lyon sont chargés au format geoJson via la fonction getGeoJsonData
 */
 
 /* STEP 1 : - Compléter la fonction onGetGeoJsonDataSuccess pour afficher un marker simple (sans popup) pour chaque arbre
@@ -63,14 +63,14 @@ kebUtil.control.zoomInfo(map).addTo(map);
 /* STEP 3 : - Modifier la fonction onGetGeoJsonDataSuccess pour utiliser des markers de type L.StatefulMarker (voir en bas du fichier util.js si nécessaire)
                 -> Configurer la couche geoJson en retournant ce type de marqueur, en prenant soin d'ajouter à chaque marqueur un évènement 'click' qui lancera la fonction onMarkerClick ci-dessus
                 -> doc http://leafletjs.com/reference.html#geojson-pointtolayer
-                -> Cliquer sur des marqueurs (pas sur des clusters... il faut zoomer suffisamment) puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'" pour constater que tout fonctionne comme prévu
+                -> Cliquer sur des marqueurs (pas sur des clusters... il faut zoomer suffisamment) puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'" pour voir ce qui se passe
 */
 
 /* STEP 4 : - Ajouter et configurer le control fuseSearch (les propriétés indexées sont contenu dans le tableau searchedProperties)
                 -> Créer le control
                     -> Indiquer une taille maximum de résultat de 10
                 -> L'ajouter à la carte
-                -> Indexer les données lorsqu'elles sont disponibles, c'est à dire dans la fonction onGetGeoJsonDataSuccess
+                -> Indexer les données lorsqu'elles sont disponibles, c'est-à-dire dans la fonction onGetGeoJsonDataSuccess
                 -> doc https://github.com/naomap/leaflet-fusesearch#leaflet-fusesearch
 */
 

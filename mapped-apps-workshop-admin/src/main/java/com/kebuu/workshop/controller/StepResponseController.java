@@ -20,7 +20,7 @@ public class StepResponseController {
     @Autowired private WorkshopBonuses workshopBonuses;
     @Autowired private SimpMessagingTemplate webSocketTemplate;
 
-    @RequestMapping("/{tp:tp[0-4]}")
+    @RequestMapping("/{tp:tp[0-5]}")
     public ResponseEntity<String> answerTp1(@PathVariable("tp") String tp,
                                           @RequestParam("answer") String answer,
                                           @RequestParam("user") String user,

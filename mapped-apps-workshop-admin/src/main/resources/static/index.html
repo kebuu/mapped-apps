@@ -36,7 +36,7 @@
                 <h3>Récompenses obtenues : </h3>
                 <ul class="list-unstyled" ng-repeat="tpConfig in tpConfigs | filter:{rewarded:true}">
                     <li style="text-align:center;">
-                        <img src="/images/{{tpConfig.reward}}" width="300"/><br/>
+                        <img src="/images/{{tpConfig.reward}}" width="200"/><br/>
                         <strong>{{tpConfig.rewardName}}</strong>
                     </li>
                 </ul>
@@ -59,8 +59,8 @@
                         <div class="col-md-8">
                             <form>
                                 <input id="tp{{tpConfig.id}}Answer" class="form-control" type="{{tpConfig.inputType}}" ng-hide="tpConfig.rewarded" ng-model="tpConfig.answer"/>
-                                <button ng-hide="tpConfig.rewarded" class="btn btn-success" ng-click="answerStep(tpConfig)" ng-disabled="!tpConfig.answer && tpConfig.id !== 4">Tenter votre chance</button>
-                                <p class="text-success" ng-show="tpConfig.rewarded"><strong>TP{{tpConfig.id}} OK.</strong><strong ng-show="tpConfig.id !== 4"> L'indice pour cette étape est : {{tpConfig.bonus}}</strong></p>
+                                <button ng-hide="tpConfig.rewarded" class="btn btn-success" ng-click="answerStep(tpConfig)" ng-disabled="!tpConfig.answer">Tenter votre chance</button>
+                                <p class="text-success" ng-show="tpConfig.rewarded"><strong>TP{{tpConfig.id}} OK.</strong><strong ng-show="tpConfig.id !== 5"> L'indice pour cette étape est : {{tpConfig.bonus}}</strong></p>
                                 <p class="text-error" ng-show="tpConfig.failed"><strong>'{{tpConfig.lastAnswer}}' n'est pas la bonne réponse</strong></p>
                             </form>
                         </div>

@@ -14,18 +14,23 @@ module.controller('mainCtrl', function($scope) {
             url:'bienJoueBonhomme.jpg'
         },
         tp2: {
-            name:'Matt Leblanc',
-            url:'mathLeblan.gif'
+            name:'Good job',
+            url:'good-job.jpg'
         },
         tp3: {
             name:'Bien joué ma biche',
             url:'bienJoueMaBiche.jpg'
         },
         tp4: {
+            name:'Jésus',
+            url:'jesus.jpg'
+        },
+        tp5: {
             name:'M&M\'s',
             url:'bienJoueM&ms.jpg'
-        },
+        }
     };
+
     $scope.events = [];
 
     var getSound = function(stepEvent) {
@@ -33,7 +38,7 @@ module.controller('mainCtrl', function($scope) {
         
         if(!stepEvent.successful) {
             sound = 'gasp_x.wav';
-        } else if(stepEvent.step === 'tp4') {
+        } else if(stepEvent.step === 'tp5') {
             sound = 'gong.wav';
         } else {
             sound = 'cymbals.wav';

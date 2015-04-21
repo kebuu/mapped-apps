@@ -38,10 +38,10 @@
     <div id="eventContainer" class="container">
         <div class="event" ng-repeat="event in events">
             <div ng-class="{answerOk: event.successful, answerKo: !event.successful}">
-                <img src="{{event.userAvatarUrl}}" width="80" />
+                <img src="{{event.userAvatarUrl}}" width="60" />
                 <strong ng-if="!event.successful">La tentative de réponse de {{event.user}} au {{event.step | uppercase}} a malheureusement échoué</strong>
                 <strong ng-if="event.successful">{{event.user}} a répondu correctement au {{event.step | uppercase}}. Il obtient la récompense '{{rewards[event.step].name}}'</strong>
-                <img src="/images/{{rewards[event.step].url}}" ng-if="event.successful" width="150"/>
+                <img src="/images/{{rewards[event.step].url}}" ng-if="event.successful" width="120"/>
                 <audio autoplay>
                     <source src="{{event.sound}}" type="audio/wav">
                 </audio>

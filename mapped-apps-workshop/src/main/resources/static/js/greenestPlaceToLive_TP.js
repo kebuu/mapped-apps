@@ -61,9 +61,9 @@ kebUtil.control.zoomInfo(map).addTo(map);
 */
 
 /* STEP 3 : - Modifier la fonction onGetGeoJsonDataSuccess pour utiliser des markers de type L.StatefulMarker (voir en bas du fichier util.js si nécessaire)
-                -> Configurer la couche geoJson en retournant ce type de marqueur, en prenant soin d'ajouter à chaque marqueur un évènement 'click' qui lancera la fonction onMarkerClick ci-dessous
+                -> Configurer la couche geoJson en retournant ce type de marqueur, en prenant soin d'ajouter à chaque marqueur un évènement 'click' qui lancera la fonction onMarkerClick ci-dessus
                 -> doc http://leafletjs.com/reference.html#geojson-pointtolayer
-                -> Cliquer sur des marqueurs puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'" pour constater que tout fonctionne comme prévu
+                -> Cliquer sur des marqueurs (pas sur des clusters... il faut zoomer suffisamment) puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'" pour constater que tout fonctionne comme prévu
 */
 
 /* STEP 4 : - Ajouter et configurer le control fuseSearch (les propriétés indexées sont contenu dans le tableau searchedProperties)

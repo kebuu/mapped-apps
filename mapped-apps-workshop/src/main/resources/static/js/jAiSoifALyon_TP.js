@@ -12,14 +12,14 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
 /* STEP 2 : - Activer la geolocalisation :
                 - Compléter la fonction locateMe en demandant une geolocalisation
                 - Ajouter un eventHandler sur la carte réagissant à l'évènement "locationfound"
-                - Centrer "location" trouvée et ajouter un marker avec une popup indiquant "Votre position"
+                - Centrer sur "location" trouvée et ajouter un marker avec une popup indiquant "Votre position"
                 - docs  http://leafletjs.com/reference.html#map-locate http://leafletjs.com/reference.html#map-locationfound
 */
 
 /* STEP 3 : - Trouver la fontaine la plus proche :
                 - Compléter la fonction findClosestFountain en utilisant la fonction kebUtil.findClosestFountain
-                    -> il suffit de lui passer en paramètre l'objet LatLng correspondant à notre position
-                - Regarder le code de la fonction kebUtil.findClosestFountain et vérifier qu'on comprend bien ce qu'il fait
+                    -> il suffit de lui passer en paramètre l'objet LatLng correspondant à votre position
+                - Regarder le code de la fonction kebUtil.findClosestFountain et vérifier ce qu'il fait
                 - doc http://docs.geoserver.org/stable/en/user/services/wfs/reference.html http://leafletjs.com/reference.html#latlng-distanceto
 */
 

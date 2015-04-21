@@ -68,30 +68,30 @@ module.controller('mainCtrl', function($scope, $http) {
         sendAnswer(tpConfig, usedAnswer);
     };
 
-    $scope.fakeUserConnection = function(tpConfig) {
-        $scope.loggedUserInfo = {
-            family_name: "Tardella",
-            gender: "male",
-            given_name: "Christophe",
-            id: "116277890430412064611",
-            link: "https://plus.google.com/116277890430412064611",
-            locale: "en",
-            name: "Christophe Tardella",
-            picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
-        };
+    //$scope.fakeUserConnection = function(tpConfig) {
+    //    $scope.loggedUserInfo = {
+    //        family_name: "Tardella",
+    //        gender: "male",
+    //        given_name: "Christophe",
+    //        id: "116277890430412064611",
+    //        link: "https://plus.google.com/116277890430412064611",
+    //        locale: "en",
+    //        name: "Christophe Tardella",
+    //        picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
+    //    };
+    //
+    //    sendAnswer($scope.tpConfigs[0], "answer");
+    //}
 
-        sendAnswer($scope.tpConfigs[0], "answer");
-    }
-
-//    OAuth.initialize('WYdOxw8gZZzIHtgIYKMMtqv_ujc');
-//    OAuth.popup('google', {cache: true}).done(function(result) {
-//        console.log('google connexion ok', result);
-//        result.get('https://www.googleapis.com/oauth2/v2/userinfo').done(function(data) {
-//            $scope.$apply(function() {
-//                console.log('loggedUserInfo ok', data);
-//                $scope.loggedUserInfo = data;
-//                sendAnswer($scope.tpConfigs[0], "answer");
-//            });
-//        })
-//    });
+    OAuth.initialize('WYdOxw8gZZzIHtgIYKMMtqv_ujc');
+    OAuth.popup('google', {cache: true}).done(function(result) {
+        console.log('google connexion ok', result);
+        result.get('https://www.googleapis.com/oauth2/v2/userinfo').done(function(data) {
+            $scope.$apply(function() {
+                console.log('loggedUserInfo ok', data);
+                $scope.loggedUserInfo = data;
+                sendAnswer($scope.tpConfigs[0], "answer");
+            });
+        })
+    });
 });

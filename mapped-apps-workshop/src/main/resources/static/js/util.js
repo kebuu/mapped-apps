@@ -28,17 +28,17 @@ var kebUtil = {
     statefulMarker : function(coordinates, options) {
         var marker = L.Marker.extend({
             initialize: function (coordinates, options) {
-                L.Marker.prototype.initialize.call(this, coordinates); 
-                           
+                L.Marker.prototype.initialize.call(this, coordinates);
+
                 this._iconByState = options.states;                
                 this.setState('default');
             },
-            
+
             setState : function(state) {
                 var stateIcon = this._iconByState[state];
-                
+
                 if(stateIcon) {
-                    this.setIcon(stateIcon);                
+                    this.setIcon(stateIcon);
                     this._state = state;
                 } else {
                     throw Error('No icon found for state \'' + state + '\'');
@@ -131,7 +131,7 @@ var kebUtil = {
 var defaultStates = {
     default : L.icon({iconUrl: '/images/marker-icon-green.png'}),
     selected : L.icon({iconUrl: '/images/marker-icon-orange.png'}),
-    treated : L.icon({iconUrl: '/images/marker-icon-purple.png'}),
+    treated : L.icon({iconUrl: '/images/marker-icon-purple.png'})
 };
 
 L.StatefulMarker = function (coordinates, options) {

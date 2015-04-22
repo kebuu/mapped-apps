@@ -42,16 +42,16 @@ var zenikaParis = [48.878933, 2.328639];
                 -> Il s'agit d'un control que j'ai réalisé : kebUtil.control.zoomInfo(map).addTo(map);
 */
 
-/* STEP 5 : - Créer un tileLayer de fond de plan en utilisant mapbox sans l'ajouter à la carte
+/* STEP M&M's : - Quelle est la valeur de l'échelle (control "Scale") au niveau de zoom 9 (en km) ?
+*/
+
+/* Bonus : - Créer un tileLayer de fond de plan en utilisant mapbox sans l'ajouter à la carte
                 -> url : 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png'
                 -> option "attribution" : Zenika - Technozaure | MapBox
                 -> option "id" : ctardella.kko459nh
             - Ajouter le control "Layers" à la carte
                 -> Utiliser les couches OpenStreetMap et MapBox comme "baseLayers" et les couches velov et poubelle comme "overlays"
                 -> doc http://leafletjs.com/reference.html#control-layers
-*/
-
-/* STEP M&M's : - Quelle est la valeur de l'échelle (control "Scale") au niveau de zoom 9 (en km) ?
 */
 
 /* STEP Bonus : - Regarder la doc des différents controls pour adapter/changer leur comportement

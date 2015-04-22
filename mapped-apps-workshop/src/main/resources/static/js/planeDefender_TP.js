@@ -13,7 +13,7 @@ var defences = [];
                 -> doc : https://github.com/Leaflet/Leaflet.draw#drawcreated
  */
 
-/* STEP 3 : - Defender votre avion
+/* STEP 3 : - Defendez votre avion
                 -> Ajouter les lignes dessinées au tableau de défence (definie ci-dessus) en les convertissant
                     préalabelement en GeoJson
                 -> doc : http://leafletjs.com/reference.html#polyline-togeojson

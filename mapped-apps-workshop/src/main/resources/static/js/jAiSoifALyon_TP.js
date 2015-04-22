@@ -35,10 +35,13 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
                             width : null, // Longueur de la carte : http://leafletjs.com/reference.html#map-getsize
                             height : null, // Hauteur de la carte : http://leafletjs.com/reference.html#map-getsize
                     }
-                - Regarder le code de la fonction kebUtil.getFeatureInfo et vérifier qu'on comprend ce qu'il fait
 */
 
 /* STEP M&M's : - Quelle est le nom de la fontaine la plus proche ?
+*/
+
+/* STEP Bonus : - Regarder le code de la fonction kebUtil.getFeatureInfo et vérifier qu'on comprend ce qu'il fait
+                    - un console.log en reponse au bon évènement fera l'affaire
 */
 
 /* STEP Bonus : - Essayer de récuperer l'information que l'utilisateur a refuser la demande de localisation de l'application

@@ -66,15 +66,15 @@ kebUtil.control.zoomInfo(map).addTo(map);
                 -> Cliquer sur des marqueurs (pas sur des clusters... il faut zoomer suffisamment) puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'" pour voir ce qui se passe
 */
 
-/* STEP 4 : - Ajouter et configurer le control fuseSearch (les propriétés indexées sont contenu dans le tableau searchedProperties)
+/* STEP M&M's : - Quel est la taille du plus gros cluster au niveau de zoom 10 ?
+*/
+
+/* STEP Bonus : - Ajouter et configurer le control fuseSearch (les propriétés indexées sont contenu dans le tableau searchedProperties)
                 -> Créer le control
                     -> Indiquer une taille maximum de résultat de 10
                 -> L'ajouter à la carte
                 -> Indexer les données lorsqu'elles sont disponibles, c'est-à-dire dans la fonction onGetGeoJsonDataSuccess
                 -> doc https://github.com/naomap/leaflet-fusesearch#leaflet-fusesearch
-*/
-
-/* STEP M&M's : - Quel est la taille du plus gros cluster au niveau de zoom 10 ?
 */
 
 /* STEP Bonus : - Modifier le control pour utiliser la fonction renderSearchResult comme fonction de rendu des résultats

@@ -17,17 +17,19 @@ var mapbox = L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png',
     id: 'ctardella.kko459nh'
 });
 
-var velov = L.tileLayer.wms("https://download.data.grandlyon.com/wms/smartdata", {
+var velov = L.tileLayer.wms("https://download.data.grandlyon.com/wms/rdata", {
     layers: 'jcd_jcdecaux.jcdvelov',
     format: 'image/png',
     transparent: true
 });
+velov.addTo(map);
 
 var garbage = L.tileLayer.wms("https://download.data.grandlyon.com/wms/grandlyon", {
     layers: 'gin_nettoiement.gincorbeille',
     format: 'image/png',
     transparent: true
 });
+garbage.addTo(map);
 
 var zenIcon = L.icon({
     iconUrl: '/images/logo-zenika.jpg',

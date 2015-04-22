@@ -7,7 +7,7 @@ module.controller('mainCtrl', function($scope, $http) {
     var buildUrl = function(tpConfig, answer) {
         return url = '/response/tp' + tpConfig.id + '?answer=' + answer + '&user=' + $scope.loggedUserInfo.name + '&userAvatarUrl=' + $scope.loggedUserInfo.picture;
     };
-    
+
     var sendAnswer = function(tpConfig, answer) {
         $http.get(buildUrl(tpConfig, answer))
         .success(function(data) {
@@ -18,7 +18,7 @@ module.controller('mainCtrl', function($scope, $http) {
             tpConfig.failed = true;
         });
     };
-    
+
     $scope.tpConfigs = [{
         id: 0,
         reward : 'bienJoueStart.jpg',

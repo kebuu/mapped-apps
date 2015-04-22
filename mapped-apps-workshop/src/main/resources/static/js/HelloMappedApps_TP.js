@@ -7,20 +7,20 @@ var zenikaParis = [48.878933, 2.328639];
                 -> un div#map a été prévu pour accueillir la carte
             - Ajouter un fond de plan tuilé (tile) avec l'option "attribution" : Zenika - Technozaure | OSM
                 -> url de OpenStreetMap : 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-            - Centrer la carte sur la France (cf. haut du fichier) avec un niveau de zoom de 5
+            - Centrer la carte sur la France (cf. haut du fichier) avec un niveau de zoom de 5 (cf. la méthode map.setView)
             - doc map: http://leafletjs.com/reference.html#map-class
             - doc tile layer: http://leafletjs.com/reference.html#tilelayer
 */
 
-/* STEP 2 : - Ajouter un marker sur zenika Lyon avec une popup contenant le texte 'Zenika Lyon'
-            - Ajouter un marker sur zenika Paris avec une popup contenant le texte 'Zenika Paris' et une icone personnalisée:
+/* STEP 2 : - Ajouter un marker sur zenika Lyon (cf. haut du fichier) avec une popup contenant le texte 'Zenika Lyon'
+            - Ajouter un marker sur zenika Paris (cf. haut du fichier) avec une popup contenant le texte 'Zenika Paris' et une icone personnalisée:
                 -> url de l'icone : /images/logo-zenika.jpg
                 -> taille de l'icone : [20, 26]
             - doc : http://leafletjs.com/reference.html#marker
 */
 
 /* STEP 3 : - Ajouter les couches WMS de velov et de poubelles de la ville de Lyon :
-                -> url de la couche de velov : https://download.data.grandlyon.com/wms/smartdata
+                -> url de la couche de velov : https://download.data.grandlyon.com/wms/rdata
                 -> nom de la couche de velov : jcd_jcdecaux.jcdvelov
                 -> url de la couche de poubelles : https://download.data.grandlyon.com/wms/grandlyon
                 -> nom de la couche de poubelles : gin_nettoiement.gincorbeille
@@ -28,6 +28,7 @@ var zenikaParis = [48.878933, 2.328639];
                 -> transparence : à votre avis ?
                 -> doc : http://leafletjs.com/reference.html#tilelayer-wms
             - Implementer la fonction zoomToLyon (cf. bas du fichier) en centrant la carte sur Lyon avec un zoom de 14
+            - (Penser à faire un addTo(map) pour ajouter une couche à la carte)
 */
 
 /* STEP 4 : - Ajouter le control "Scale" en bas à droite de la carte:

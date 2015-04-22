@@ -52,18 +52,20 @@ kebUtil.control.zoomInfo(map).addTo(map);
                 Au chargement de la page, une partie des données des arbres gérés par la ville de Lyon sont chargés au format geoJson via la fonction getGeoJsonData
 */
 
-/* STEP 1 : - Compléter la fonction onGetGeoJsonDataSuccess pour afficher un marker simple (sans popup) pour chaque arbre
+/* STEP 1 : - Compléter la fonction onGetGeoJsonDataSuccess (cf. bas du fichier) pour ajouter les données geoJson à la carte
+                -> doc  http://leafletjs.com/reference.html#geojson
 */
 
-/* STEP 2 : - Modifier la fonction onGetGeoJsonDataSuccess pour afficher des clusters (groupement) d'arbres
+/* STEP 2 : - Modifier la fonction onGetGeoJsonDataSuccess pour afficher des clusters (groupement) d'arbres à la place des marker simples
                 -> Utiliser un layer de type MarkerClusterGroup
-                -> doc https://github.com/Leaflet/Leaflet.markercluster#leafletmarkercluster
+                -> doc  https://github.com/Leaflet/Leaflet.markercluster#usage
 */
 
 /* STEP 3 : - Modifier la fonction onGetGeoJsonDataSuccess pour utiliser des markers de type L.StatefulMarker (voir en bas du fichier util.js si nécessaire)
-                -> Configurer la couche geoJson en retournant ce type de marqueur, en prenant soin d'ajouter à chaque marqueur un évènement 'click' qui lancera la fonction onMarkerClick ci-dessus
-                -> doc http://leafletjs.com/reference.html#geojson-pointtolayer
-                -> Cliquer sur des marqueurs (pas sur des clusters... il faut zoomer suffisamment) puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'" pour voir ce qui se passe
+                -> Configurer la couche geoJson en retournant ce type de marqueur, en prenant soin d'ajouter à chaque marqueur un évènement 'click' qui lancera la fonction onMarkerClick (cf. haut du fichier)
+                    -> doc  http://leafletjs.com/reference.html#geojson-pointtolayer
+                            http://leafletjs.com/reference.html#marker-click
+                -> Cliquer sur des marqueurs (pas sur des clusters... il faut zoomer suffisamment) puis sur le bouton "Marquer les arbres sélectionnés comme 'traités'"
 */
 
 /* STEP M&M's : - Quel est la taille du plus gros cluster au niveau de zoom 10 ?
@@ -72,9 +74,9 @@ kebUtil.control.zoomInfo(map).addTo(map);
 /* STEP Bonus : - Ajouter et configurer le control fuseSearch (les propriétés indexées sont contenu dans le tableau searchedProperties)
                 -> Créer le control
                     -> Indiquer une taille maximum de résultat de 10
+                    -> doc https://github.com/naomap/leaflet-fusesearch#leaflet-fusesearch
                 -> L'ajouter à la carte
                 -> Indexer les données lorsqu'elles sont disponibles, c'est-à-dire dans la fonction onGetGeoJsonDataSuccess
-                -> doc https://github.com/naomap/leaflet-fusesearch#leaflet-fusesearch
 */
 
 /* STEP Bonus : - Modifier le control pour utiliser la fonction renderSearchResult comme fonction de rendu des résultats
